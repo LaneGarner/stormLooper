@@ -1,5 +1,7 @@
 // Use a do...while loop to console.log the numbers from 1 to 1000.
 
+console.log('-----------1 to 1k----------')
+
 let i = 0;
 do {
     console.log(i++)
@@ -16,6 +18,7 @@ const person = {
 }
 
 // Create a function that logs out the keys of the object using Object.keys().
+console.log('---------LOG PERSON KEYS------------')
 
 const logObjectKeys = (obj) => {
     console.log(Object.keys(obj));
@@ -24,6 +27,8 @@ const logObjectKeys = (obj) => {
 logObjectKeys(person)
 
 // Create a function that logs out the keys and values of the object using Object.entries().
+console.log('-----------LOG PERSON KEYS AND VALUES----------')
+
 
 const logKeysAndValues = (obj) => {
     console.log(Object.entries(obj));
@@ -57,10 +62,18 @@ const arrayOfPersons = [
         lastName: 'Perez',
         birthDate: 'April 6, 1972',
         gender: 'male'
+    },
+    {
+        firstName: 'Bridgette',
+        lastName: 'Sanchez',
+        birthDate: 'June 14, 2012',
+        gender: 'female'
     }
 ]
 
 // Create a function that uses a for...of loop and an if statement to console.log the value associated with the key birthDate of each object if the birth year is an odd number.
+console.log('-----------ODD BIRTH YEARS----------')
+
 
 const oddBirthYear = () => {
     for (const person of arrayOfPersons) {
@@ -73,18 +86,21 @@ const oddBirthYear = () => {
 oddBirthYear()
 
 // Use .map() to map over the arrayOfPersons and console.log() their information.
+console.log('-----------ARRAY MAP----------')
 
 const mapPeople = arrayOfPersons.map(x => x)
 
 console.log(mapPeople)
 
 // Use .filter() to filter the persons array and console.log only males in the array.
+console.log('-----------MALES----------')
 
 const males = arrayOfPersons.filter(person => person.gender === 'male');
 
 console.log(males)
 
 // Create a function that returns true if the value of birthDate is before Jan 1, 1990.
+console.log('----------BORN BEFORE 1990 BOOLEAN-----------')
 
 const before1990 = (arr) => {
     arr.forEach((person)=>{
@@ -99,34 +115,51 @@ const before1990 = (arr) => {
 before1990(arrayOfPersons)
 
 // Use .filter() to filter the persons array and console.log only people that were born before Jan 1, 1990.
+console.log('-----------BORN BEFORE 1990 FILTER----------')
 
 const oldFolks = arrayOfPersons.filter(person => person.birthDate.slice(-4) < 1990);
 
 console.log(oldFolks);
 
 // BONUS - Create a function that returns true if the date passed to it is >= 21 years in the past.
+console.log('-----------IS 21 BOOLEAN----------')
 
 const is21 = (date) => {
-let today = new Date()
-date = new Date(date);
-let legal = new Date(today.getFullYear()-21, today.getMonth(), today.getDate());
-
-return date.getTime()<legal.getTime();
-
-
+    let today = new Date().toLocaleDateString()
+    let legalMonth = new Date().getMonth() +1
+    let legalDay = new Date().getDate()
+    let legalYear = today.slice(-4) - 21
+    let legal = new Date(`${legalMonth}/${legalDay}/${legalYear}`)
+    
+    if (new Date(date) <= legal) {
+        // console.log(true)
+        return true
+    } else {
+        // console.log(false)
+        return false
+    }
 }
 
-console.log(is21(10/21/1987))
-console.log(is21(12/21/2005))
-
-
-// const is21yrs = (date) => {
-// 	var now = new Date();
-// 	var date = new Date(date);
-// 	var old = new Date(now.getFullYear()-21, now.getMonth(), now.getDate());
-// 	return date.getTime()<old.getTime();
-// }
-
-// console.log(is21yrs(10/21/1987))
+console.log(is21('10/21/1987'))
+console.log(is21('Jan 20, 1997'))
+console.log(is21('99 Nov 7'))
+console.log(is21('99 Nov 10'))
+console.log(is21('10/21/2005'))
+console.log(is21('20 Jan 2009'))
 
 // BONUS - .filter() out the people in the array who are younger than 21.
+console.log('----------UNDER 21 FILTER-----------')
+
+const under21 = arrayOfPersons.filter(person => !is21(person.birthDate))
+
+console.log(under21)
+
+console.log('----------forEach to log name of under 21-----------')
+
+
+const underTwentyOne = arrayOfPersons.forEach((person) => {
+    const birthdates = new Date(person.birthDate)
+    if (is21(birthdates) === false) {
+        console.log(`${person.firstName} ${person.lastName}`)
+    }
+})
